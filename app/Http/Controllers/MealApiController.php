@@ -11,12 +11,18 @@ use Illuminate\Http\Request;
 
 class MealApiController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        return new MealCollection(Meal::with(['category','tags','ingredients'])->get());
-        //$meals = Meal::with('categories')->get();
+        //return new MealCollection(Meal::with(['category','tags','ingredients'])->get());
+        $query = Meal::query();
 
-        // Return the users as a resource collection
-        //return MealResource::collection($meals);
+        if ($request->has('with')) {
+
+            $properties = explode(',', $request->input('with'));
+            $query->with($properties);
+        }
+
+        $perPage = $request->input('per_page');
+        return new MealCollection($query->paginate($perPage));
     }
 }

@@ -16,12 +16,20 @@ class MealCollection extends ResourceCollection
     {
         return [
             'meta' => [
-                'key' => 'value',
+                'currentPage'=> $this->currentPage(),
+                'totalItems'=> $this->total(),
+                'itemsPerPage'=> $this->perPage(),
+                'totalPages'=> $this->lastPage(),
+                
             ],
-            'data' => $this->collection,
-            'links' => [
-                'self' => 'link-value',
-            ],
+            'data' => $this->collection
+            
         ];
+    }
+    public function paginationInformation($request, $paginated, $default)
+    {
+        unset($default['meta']);
+        //unset($default['links']);
+        return $default;
     }
 }

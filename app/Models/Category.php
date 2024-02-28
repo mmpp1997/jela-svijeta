@@ -10,6 +10,6 @@ class Category extends Model
 {
     use HasFactory, SoftDeletes;
     public function meal() {
-        return $this->hasMany(Meal::class);
+        return $this->hasOne(Meal::class);
     }
 }

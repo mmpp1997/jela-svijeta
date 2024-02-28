@@ -15,9 +15,11 @@ return new class extends Migration
             $table->id();
             $table->string('title')->unique();
             $table->longText('description');
-            $table->foreignId('category')->references('id')->on('categories')->onDelete('cascade');
+            $table->unsignedBigInteger('category');
             $table->timestamps();
             $table->softDeletes();
+
+            $table->foreign('category')->references('id')->on('categories');
         });
     }
 

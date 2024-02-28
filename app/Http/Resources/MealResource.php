@@ -19,8 +19,9 @@ class MealResource extends JsonResource
             'id' => $this->id,
             'title' => $this->title,
             'description' => $this->description,
-            //'category' => $this->category,
-            'category' => new CategoryResource(Category::find($this->category)),
+            'category' => $this->whenLoaded('category', function () {
+                return new CategoryResource(Category::find($this->category));
+            }),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'deleted_at' => $this->deleted_at,
