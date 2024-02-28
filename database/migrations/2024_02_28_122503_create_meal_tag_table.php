@@ -11,10 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('meals', function (Blueprint $table) {
-            $table->id();
-            $table->string('title')->unique();
-            $table->longText('description');
+        Schema::create('meal_tag', function (Blueprint $table) {
+            $table->unsignedBigInteger('meal_id');
+            $table->unsignedBigInteger('tag_id');
+            $table->foreign('meal_id')->references('id')->on('meals')->onDelete('cascade');
+            $table->foreign('tag_id')->references('id')->on('tags')->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -25,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('meals');
+        Schema::dropIfExists('meal_tag');
     }
 };

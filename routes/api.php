@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\MealsApiController;
+use App\Http\Controllers\MealApiController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -15,4 +15,4 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/meals',[MealsApiController::class, 'index']);
+Route::get('/meals',[MealApiController::class, 'index']);
