@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Services\TimeCompare;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -15,10 +16,21 @@ class MealResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        $status="created";
+        if ($request->has('diff_time')) {
+
+            $status = TimeCompare::getStatus(
+                $this->updated_at,
+                $this->deleted_at,
+                $request->input('diff_time')
+            );
+        }
+
         return [
             'id' => $this->id,
             'title' => $this->title,
             'description' => $this->description,
+            'status' => $status,
             'category' => $this->whenLoaded('category', function () {
                 return new CategoryResource(Category::find($this->category));
             }),

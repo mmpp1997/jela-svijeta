@@ -46,9 +46,12 @@ class DatabaseSeeder extends Seeder
             'category'=>null
         ]);
         Meal::factory()->create([
-            'title' => 'Test Meal 2',
-            'description' => 'meal without category 2',
-            'category'=>null
+            'title' => 'izbrisano jelo',
+            'description' => 'izbrisani opis jela',
+            'category'=>null,
+            'created_at' => '2024-02-29 09:37:03',
+            'updated_at' => '2024-02-29 11:37:03',
+            'deleted_at' => '2024-02-29 13:37:03'
         ]);
     }
 }

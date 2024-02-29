@@ -29,7 +29,6 @@ class MealCollection extends ResourceCollection
     public function paginationInformation($request, $paginated, $default)
     {
         unset($default['meta']);
-        //unset($default['links']);
         return $default;
     }
 }

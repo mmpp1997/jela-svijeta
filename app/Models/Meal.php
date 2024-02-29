@@ -22,4 +22,10 @@ class Meal extends Model
     {
         return $this->belongsToMany(Ingredient::class);
     }
+    public function calculate_status()
+    {
+        dd("we are here");
+        
+    }
+
 }

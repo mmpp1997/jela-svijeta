@@ -14,7 +14,7 @@ class MealApiController extends Controller
     public function index(Request $request)
     {
         //return new MealCollection(Meal::with(['category','tags','ingredients'])->get());
-        $meals = Meal::query();
+        $meals = Meal::query()->withTrashed();
 
         if ($request->has('category')) {
 
