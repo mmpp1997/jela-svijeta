@@ -14,15 +14,35 @@ class MealApiController extends Controller
     public function index(Request $request)
     {
         //return new MealCollection(Meal::with(['category','tags','ingredients'])->get());
-        $query = Meal::query();
+        $meals = Meal::query();
+
+        if ($request->has('category')) {
+
+            $category = $request->input('category');
+
+            if ($category === 'null') {
+                $meals->whereNull('category');
+            } else {
+                $meals->where('category', $category);
+            }
+        }
+
+        if ($request->has('tags')) {
+
+            $tags = explode(',', $request->input('tags'));
+
+            $meals->whereHas('tags', function ($q) use ($tags) {
+                $q->whereIn('id', $tags);
+            }, '=', count($tags));
+        }
 
         if ($request->has('with')) {
 
             $properties = explode(',', $request->input('with'));
-            $query->with($properties);
+            $meals->with($properties);
         }
 
-        $perPage = $request->input('per_page');
-        return new MealCollection($query->paginate($perPage));
+        $perPage = $request->input('per_page', 10);
+        return new MealCollection($meals->paginate($perPage));
     }
 }

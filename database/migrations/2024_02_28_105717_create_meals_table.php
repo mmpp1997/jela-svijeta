@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('title')->unique();
             $table->longText('description');
-            $table->unsignedBigInteger('category');
+            $table->unsignedBigInteger('category')->nullable();
             $table->timestamps();
             $table->softDeletes();
 

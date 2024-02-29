@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
         Ingredient::factory(5)->create();
         Meal::factory(5)->create();
 
+
         // Get all meals and tags
         $meals = Meal::all();
         $tags = Tag::all();
@@ -38,7 +39,16 @@ class DatabaseSeeder extends Seeder
             $numberOfIngredients = rand(1, 3);
             $meal->ingredients()->attach($ingredient->random($numberOfIngredients)->pluck('id')->toArray());
         });
-        
-        
+
+        Meal::factory()->create([
+            'title' => 'Test Meal',
+            'description' => 'meal without category',
+            'category'=>null
+        ]);
+        Meal::factory()->create([
+            'title' => 'Test Meal 2',
+            'description' => 'meal without category 2',
+            'category'=>null
+        ]);
     }
 }
