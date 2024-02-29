@@ -12,11 +12,21 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('categories', function (Blueprint $table) {
-            $table->id();
-            $table->string('title')->unique();
+            $table->increments('id');
             $table->string('slug')->unique();
             $table->timestamps();
             $table->softDeletes();
+        });
+
+        Schema::create('category_translations', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('category_id')->unsigned();
+            $table->string('locale')->index();
+         
+            $table->string('title');
+         
+            $table->unique(['category_id','locale']);
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
         });
     }
 
@@ -26,5 +36,6 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('categories');
+        Schema::dropIfExists('category_translations');
     }
 };

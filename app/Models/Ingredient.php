@@ -5,10 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Astrotomic\Translatable\Translatable;
 
 class Ingredient extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes,Translatable;
+
+    public $translatedAttributes = ['title'];
+    
     public function meals() {
         return $this->hasMany(Meal::class);
     }

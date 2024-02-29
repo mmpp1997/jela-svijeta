@@ -13,7 +13,8 @@ class MealApiController extends Controller
 {
     public function index(Request $request)
     {
-        //return new MealCollection(Meal::with(['category','tags','ingredients'])->get());
+        app()->setLocale($request->input('lang'));
+
         $meals = Meal::query()->withTrashed();
 
         if ($request->has('category')) {
