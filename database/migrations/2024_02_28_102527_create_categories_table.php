@@ -11,21 +11,25 @@ return new class extends Migration
      */
     public function up(): void
     {
+        //create categories table
         Schema::create('categories', function (Blueprint $table) {
             $table->increments('id');
             $table->string('slug');
             $table->timestamps();
+            //enable soft delete
             $table->softDeletes();
         });
 
+        //create table for category title translations
         Schema::create('category_translations', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('category_id')->unsigned();
             $table->string('locale');
          
             $table->string('title');
-         
+            
             $table->unique(['category_id','locale']);
+            //connect category with category translations 
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
            
         });

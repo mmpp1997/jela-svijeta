@@ -11,6 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
+        //create ingredient_meal table to manage manyToMany relationship between meal and ingredient
         Schema::create('ingredient_meal', function (Blueprint $table) {
             $table->unsignedBigInteger('meal_id');
             $table->unsignedBigInteger('ingredient_id');

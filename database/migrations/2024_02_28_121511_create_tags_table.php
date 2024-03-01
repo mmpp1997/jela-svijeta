@@ -11,13 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
+        //create tags table 
         Schema::create('tags', function (Blueprint $table) {
             $table->id();
             $table->string('slug');
             $table->timestamps();
+            //enable soft delete
             $table->softDeletes();
         });
-
+        //create tags translation table 
         Schema::create('tag_translations', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('tag_id')->unsigned();
@@ -26,6 +28,7 @@ return new class extends Migration
             $table->string('title');
          
             $table->unique(['tag_id','locale']);
+            //connect tags and tags translation table 
             $table->foreign('tag_id')->references('id')->on('tags')->onDelete('cascade');
         });
     }

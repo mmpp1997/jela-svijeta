@@ -11,13 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
+        //create ingredinets table
         Schema::create('ingredients', function (Blueprint $table) {
             $table->id();
             $table->string('slug');
             $table->timestamps();
+            //enable soft delete
             $table->softDeletes();
         });
 
+        //create ingredient translations table
         Schema::create('ingredient_translations', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('ingredient_id')->unsigned();
@@ -26,6 +29,7 @@ return new class extends Migration
             $table->string('title');
          
             $table->unique(['ingredient_id','locale']);
+            //connect ingredient and ingredient translations tables
             $table->foreign('ingredient_id')->references('id')->on('ingredients')->onDelete('cascade');
         });
     }

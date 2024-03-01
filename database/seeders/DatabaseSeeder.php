@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        //create data in database.sqlite manually
         Language::create([
             'locale' => 'en',
             'name' => 'English',
@@ -48,6 +49,7 @@ class DatabaseSeeder extends Seeder
             'hr' => ['title' => 'tag na HRV'],
         ]);
 
+        //create data in database using Faker/factory
         Category::factory(5)->create();
         Tag::factory(5)->create();
         Ingredient::factory(5)->create();
@@ -82,7 +84,7 @@ class DatabaseSeeder extends Seeder
             ],
         ]);
 
-        // Get all meals and tags
+        // Get all meals, tags and ingredients
         $meals = Meal::all();
         $tags = Tag::all();
         $ingredient = Ingredient::all();

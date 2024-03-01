@@ -14,6 +14,7 @@ class Tag extends Model
     
     public $translatedAttributes = ['title'];
     
+    //define relationship with meals
     public function meals()
     {
         return $this->belongsToMany(Meal::class);

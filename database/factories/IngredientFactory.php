@@ -16,6 +16,7 @@ class IngredientFactory extends Factory
      */
     public function definition(): array
     {
+        //fill ingredient data
         return [
             'slug' => $this->faker->words(1 ,true) . '-' . $this->faker->randomDigit(),
             'en' => ['title' =>'Ingredient ' .  $this->faker->words(1 ,true) . ' EN'],

@@ -16,7 +16,7 @@ class Category extends Model implements TranslatableContract
     public $translatedAttributes = ['title'];
 
     
-    
+    //define relationship with meals
     public function meal() {
         return $this->hasOne(Meal::class);
     }

@@ -13,6 +13,7 @@ class Ingredient extends Model
 
     public $translatedAttributes = ['title'];
     
+    //define relationship with meals
     public function meals() {
         return $this->hasMany(Meal::class);
     }

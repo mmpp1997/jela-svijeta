@@ -16,6 +16,7 @@ class TagFactory extends Factory
      */
     public function definition(): array
     {
+        //fill tag data 
         return [
             'slug' => $this->faker->words(1 ,true) . '-' . $this->faker->randomDigit(),
             'en' => ['title' =>'Tag ' .  $this->faker->words(1 ,true) . ' EN'],

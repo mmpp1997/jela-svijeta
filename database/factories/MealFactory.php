@@ -18,6 +18,7 @@ class MealFactory extends Factory
      */
     public function definition(): array
     {
+        //fill meal data 
         return [
             'category' => Category::inRandomOrder()->first()->id,
             'en' => [

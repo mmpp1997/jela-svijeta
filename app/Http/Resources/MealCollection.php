@@ -14,6 +14,7 @@ class MealCollection extends ResourceCollection
      */
     public function toArray(Request $request): array
     {
+        //define fields that will be returned when accessing meal collection
         return [
             'meta' => [
                 'currentPage'=> $this->currentPage(),
@@ -28,6 +29,7 @@ class MealCollection extends ResourceCollection
     }
     public function paginationInformation($request, $paginated, $default)
     {
+        //disable default meta 
         unset($default['meta']);
         return $default;
     }

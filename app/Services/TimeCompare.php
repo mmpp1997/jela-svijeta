@@ -5,6 +5,7 @@ use Carbon\Carbon;
 
 class TimeCompare
 {
+    //update meal status based on user input (diff_time)
     public static function getStatus($updated_at, $deleted_at, $inputTime)
     {
         $status = "created";

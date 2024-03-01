@@ -14,6 +14,7 @@ class IngredientResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        //define fields that will be returned when accessing igredient
         return [
             'id' => $this->id,
             'title' => $this->title,

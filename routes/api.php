@@ -14,5 +14,6 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
-
+//Api get route for meals
+//e.g. .../api/meals?lang=en&with=ingredients,tags,category
 Route::get('/meals',[MealApiController::class, 'index']);
