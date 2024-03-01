@@ -17,8 +17,9 @@ class IngredientFactory extends Factory
     public function definition(): array
     {
         return [
-            'title' => $this->faker->sentence(),
-            'slug' => $this->faker->slug(2, false)
+            'slug' => $this->faker->words(1 ,true) . '-' . $this->faker->randomDigit(),
+            'en' => ['title' =>'Ingredient ' .  $this->faker->words(1 ,true) . ' EN'],
+            'hr' => ['title' =>'Sastojak ' .  $this->faker->words(1 ,true) . ' HR'],
         ];
     }
 }

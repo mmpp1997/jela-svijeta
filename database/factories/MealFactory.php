@@ -19,9 +19,16 @@ class MealFactory extends Factory
     public function definition(): array
     {
         return [
-            'title' => $this->faker->sentence(),
-            'description' => $this->faker->paragraph(2),
-            'category' => Category::inRandomOrder()->first()->id
+            'category' => Category::inRandomOrder()->first()->id,
+            'en' => [
+                'title' => 'Food ' . $this->faker->words(2, true) . ' EN',
+                'description' => $this->faker->paragraphs(1, true) . ' EN'
+            ],
+            'hr' => [
+                'title' => 'Jelo ' . $this->faker->words(2, true) . ' HR',
+                'description' => $this->faker->paragraphs(1, true) . ' HR'
+            ]
+
 
         ];
     }

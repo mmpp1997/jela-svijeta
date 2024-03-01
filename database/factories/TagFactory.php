@@ -17,8 +17,9 @@ class TagFactory extends Factory
     public function definition(): array
     {
         return [
-            'title' => $this->faker->sentence(),
-            'slug' => $this->faker->slug(2, false)
+            'slug' => $this->faker->words(1 ,true) . '-' . $this->faker->randomDigit(),
+            'en' => ['title' =>'Tag ' .  $this->faker->words(1 ,true) . ' EN'],
+            'hr' => ['title' =>'Tag ' .  $this->faker->words(1 ,true) . ' HR'],
         ];
     }
 }

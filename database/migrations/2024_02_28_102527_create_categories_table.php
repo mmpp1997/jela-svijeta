@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('categories', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('slug')->unique();
+            $table->string('slug');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -21,12 +21,13 @@ return new class extends Migration
         Schema::create('category_translations', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('category_id')->unsigned();
-            $table->string('locale')->index();
+            $table->string('locale');
          
             $table->string('title');
          
             $table->unique(['category_id','locale']);
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
+           
         });
     }
 

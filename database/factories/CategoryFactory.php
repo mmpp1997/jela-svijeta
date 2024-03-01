@@ -17,7 +17,9 @@ class CategoryFactory extends Factory
     public function definition(): array
     {
         return [
-            'slug' => $this->faker->slug(2, false)
+            'slug' => $this->faker->words(1 ,true) . '-' . $this->faker->randomDigit(),
+            'en' => ['title' =>'Category ' .  $this->faker->words(1 ,true) . ' EN'],
+            'hr' => ['title' =>'Kategorija ' .  $this->faker->words(1 ,true) . ' HR'],
         ];
     }
 }

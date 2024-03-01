@@ -6,15 +6,16 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\MealCollection;
 use App\Http\Resources\MealResource;
 use App\Models\Ingredient;
+use App\Models\Language;
 use App\Models\Meal;
 use Illuminate\Http\Request;
 
 class MealApiController extends Controller
 {
     public function index(Request $request)
-    {
+    { 
         app()->setLocale($request->input('lang'));
-
+        
         $meals = Meal::query()->withTrashed();
 
         if ($request->has('category')) {
