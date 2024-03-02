@@ -17,7 +17,6 @@ class CategoryFactory extends Factory
      */
     public function definition(): array
     {
-        //$faker = Faker\Factory::create('en_US');
         //fill category data 
         return [
             'slug' => $this->faker->words(1 ,true) . '-' . $this->faker->randomDigit(),

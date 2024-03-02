@@ -22,12 +22,13 @@ class MealFactory extends Factory
             'category' => Category::inRandomOrder()->first()->id,
             'en' => [
                 'title' => 'Food ' . $this->faker->words(2, true) . ' EN',
-                'description' => $this->faker->paragraphs(1, true) . ' EN'
+                'description' => $this->faker->sentences(1, true) . ' EN'
             ],
             'hr' => [
                 'title' => 'Jelo ' . $this->faker->words(2, true) . ' HR',
-                'description' => $this->faker->paragraphs(1, true) . ' HR'
+                'description' => $this->faker->sentences(1, true) . ' HR'
             ],
+
 
 
         ];
