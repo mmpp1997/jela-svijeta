@@ -28,6 +28,10 @@ class DatabaseSeeder extends Seeder
             'locale' => 'hr',
             'name' => 'Hrvatski',
         ]);
+        Language::create([
+            'locale' => 'fr',
+            'name' => 'french',
+        ]);
 
         Category::create([
             'slug' => 'category-1',

@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Language;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 
@@ -17,11 +18,20 @@ class CategoryFactory extends Factory
      */
     public function definition(): array
     {
-        //fill category data 
-        return [
-            'slug' => $this->faker->words(1 ,true) . '-' . $this->faker->randomDigit(),
-            'en' => ['title' =>'Category ' .  $this->faker->words(1 ,true) . ' EN'],
-            'hr' => ['title' =>'Kategorija ' .  $this->faker->words(1 ,true) . ' HR'],
-        ];
+        //get locales from languages table
+        $locales = Language::pluck('locale');
+        //define category array with category slug
+        $category=['slug' => $this->faker->words(1 ,true) . '-' . $this->faker->randomDigit()];
+
+        $word=$this->faker->words(2 ,true);
+        //set category name for each locale
+        foreach ($locales as $locale) {
+            
+            $category[$locale] = [
+                'title' => $word . ' ' . strtoupper($locale)
+            ];
+         }
+        //return category with slug and title for each locale
+        return $category;
     }
 }

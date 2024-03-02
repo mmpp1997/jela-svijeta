@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Meal;
+use App\Models\Language;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\MealCollection;
@@ -15,6 +16,10 @@ class MealApiController extends Controller
     public function index(Request $request)
     {
         try {
+            //get supported languages from the database.sqlite 
+            $locales = Language::pluck('locale')->toArray();
+            //set avaliable locales in translatable.php to database values 
+            config(['translatable.locales' => $locales]);
             //check for lang parameter
             if (!$request->has('lang')) {
                 throw new \Exception('missing lang parameter');

@@ -25,7 +25,6 @@ return new class extends Migration
             $table->increments('id');
             $table->integer('category_id')->unsigned();
             $table->string('locale');
-         
             $table->string('title');
             
             $table->unique(['category_id','locale']);
