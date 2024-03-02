@@ -19,6 +19,8 @@ return new class extends Migration
             $table->foreign('tag_id')->references('id')->on('tags')->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();
+            
+            $table->unique(['tag_id','meal_id']);
         });
     }
 

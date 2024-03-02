@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use App\Http\Resources\MealCollection;
 use App\Models\Meal;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\MealCollection;
+use Illuminate\Support\Facades\Config;
 
 class MealApiController extends Controller
 {
@@ -16,14 +17,29 @@ class MealApiController extends Controller
         try {
             //check for lang parameter
             if (!$request->has('lang')) {
-                throw new \Exception('Language parameter "lang" is missing.');
+                throw new \Exception('missing lang parameter');
             }
-            //set language based on "lang" query parameter e.g. "lang=en"
-            app()->setLocale($request->input('lang'));
+            //get supported languages
+            $locales = Config::get('translatable.locales');
+            //get language from query
+            $lang = $request->input('lang');
+            //check if language is supported
+            if (!in_array($lang, $locales)) {
+                //if not send error
+                throw new \Exception('unsupported language');
+            } else {
+                //set language based on "lang" query parameter e.g. "lang=en"
+                app()->setLocale($lang);
+            }
+            //check if diff time was inputted correctly
+            if ($request->has('diff_time')) {
 
+                if ($request->input('diff_time') <= 0) {
+                    throw new \Exception('invalid input for diff_time');
+                }
+            }
             //get meals with soft deleted
             $meals = Meal::query()->withTrashed();
-
             //filter by category if query has "category" e.g. "category=1"
             if ($request->has('category')) {
 
@@ -36,8 +52,7 @@ class MealApiController extends Controller
                     $meals->where('category', $category);
                 }
             }
-
-            //filter by tags if query has "tags" e.g. "tags=1,2"
+            //filter by tags e.g. "tags=1,2"
             if ($request->has('tags')) {
 
                 $tags = explode(',', $request->input('tags'));
@@ -47,7 +62,6 @@ class MealApiController extends Controller
                     $q->whereIn('id', $tags);
                 }, '=', count($tags));
             }
-
             //optional data that a certain meal has category, tags and ingredients
             // e.g. with=ingredients,tags,category
             if ($request->has('with')) {
@@ -55,14 +69,23 @@ class MealApiController extends Controller
                 $properties = explode(',', $request->input('with'));
                 $meals->with($properties);
             }
-
-            //paginate results based on user input e.g. ?per_page=10&page=2
+            //paginate results based on user input e.g. ?per_page=10
             $perPage = $request->input('per_page', 10);
-
+            //check if per_page is valid
+            if (!is_numeric($perPage) || $perPage <= 0) {
+                throw new \Exception('invalid input for per_page query parametner');
+            }
+            //select page based on user input e.g. ?page=1
+            $page = $request->input('page', 1);
+            //check if per_page is valid
+            if (!is_numeric($page) || $page <= 0) {
+                throw new \Exception('invalid input for page query parametner');
+            }
             //return meal colection with all requested data
             return new MealCollection($meals->paginate($perPage));
         } catch (\Exception $e) {
-            return response()->json(['error' => 'Invalid query'], 500)->getContent();
+            //in case of an error show it instead of sending data
+            return response()->json(['error' => $e->getMessage()], 400)->getContent();
         };
     }
 }

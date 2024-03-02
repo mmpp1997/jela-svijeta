@@ -19,6 +19,7 @@ return new class extends Migration
             $table->timestamps();
             //enable soft deletes
             $table->softDeletes();
+            $table->unique(['name','locale']);
         });
     }
 

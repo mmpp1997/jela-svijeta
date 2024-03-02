@@ -17,14 +17,13 @@ class MealResource extends JsonResource
     public function toArray(Request $request): array
     {
         //define status based on user input (diff_time)
-        $status="created";
+        $status = "created";
         if ($request->has('diff_time')) {
-
-            $status = TimeCompare::getStatus(
-                $this->updated_at,
-                $this->deleted_at,
-                $request->input('diff_time')
-            );
+                $status = TimeCompare::getStatus(
+                    $this->updated_at,
+                    $this->deleted_at,
+                    $request->input('diff_time')
+                );
         }
         //define fields that will be returned when accessing meal
         return [

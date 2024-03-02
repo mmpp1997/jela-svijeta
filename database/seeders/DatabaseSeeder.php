@@ -89,15 +89,15 @@ class DatabaseSeeder extends Seeder
         $tags = Tag::all();
         $ingredient = Ingredient::all();
 
-        // Loop through meals and attach random tags
+        //Loop through meals and attach random tags
         $meals->each(function ($meal) use ($tags) {
-            $numberOfTags = rand(1, 3);
+            $numberOfTags = rand(1, count($tags));
             $meal->tags()->attach($tags->random($numberOfTags)->pluck('id')->toArray());
         });
 
-        // Loop through meals and attach random ingredients
+        //Loop through meals and attach random ingredients
         $meals->each(function ($meal) use ($ingredient) {
-            $numberOfIngredients = rand(1, 3);
+            $numberOfIngredients = rand(1, count($ingredient));
             $meal->ingredients()->attach($ingredient->random($numberOfIngredients)->pluck('id')->toArray());
         });
   

@@ -3,7 +3,6 @@
 namespace Database\Factories;
 
 use App\Models\Category;
-use App\Models\Tag;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -28,7 +27,7 @@ class MealFactory extends Factory
             'hr' => [
                 'title' => 'Jelo ' . $this->faker->words(2, true) . ' HR',
                 'description' => $this->faker->paragraphs(1, true) . ' HR'
-            ]
+            ],
 
 
         ];

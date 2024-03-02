@@ -19,6 +19,8 @@ return new class extends Migration
             $table->foreign('ingredient_id')->references('id')->on('ingredients')->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();
+            
+            $table->unique(['ingredient_id','meal_id']);
         });
     }
 

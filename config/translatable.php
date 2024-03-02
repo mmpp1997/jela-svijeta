@@ -13,7 +13,6 @@ return [
     //suported languages
     'locales' => [
         'en',
-        'fr',
         'hr',
     ],
 
