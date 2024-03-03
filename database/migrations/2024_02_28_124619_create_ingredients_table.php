@@ -14,7 +14,7 @@ return new class extends Migration
         //create ingredinets table
         Schema::create('ingredients', function (Blueprint $table) {
             $table->id();
-            $table->string('slug');
+            $table->string('slug')->unique();
             $table->timestamps();
             //enable soft delete
             $table->softDeletes();
@@ -26,7 +26,7 @@ return new class extends Migration
             $table->integer('ingredient_id')->unsigned();
             $table->string('locale')->index();
          
-            $table->string('title');
+            $table->string('title')->unique();
          
             $table->unique(['ingredient_id','locale']);
             //connect ingredient and ingredient translations tables

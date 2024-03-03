@@ -14,7 +14,7 @@ return new class extends Migration
         //create tags table 
         Schema::create('tags', function (Blueprint $table) {
             $table->id();
-            $table->string('slug');
+            $table->string('slug')->unique();
             $table->timestamps();
             //enable soft delete
             $table->softDeletes();
@@ -25,7 +25,7 @@ return new class extends Migration
             $table->integer('tag_id')->unsigned();
             $table->string('locale')->index();
          
-            $table->string('title');
+            $table->string('title')->unique();
          
             $table->unique(['tag_id','locale']);
             //connect tags and tags translation table 

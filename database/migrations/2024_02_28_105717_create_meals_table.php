@@ -28,7 +28,7 @@ return new class extends Migration
             $table->integer('meal_id')->unsigned();
             $table->string('locale')->index();
 
-            $table->string('title');
+            $table->string('title')->unique();
             $table->longText('description');
 
             $table->unique(['meal_id', 'locale']);

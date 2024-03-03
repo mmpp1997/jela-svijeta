@@ -14,7 +14,7 @@ return new class extends Migration
         //create categories table
         Schema::create('categories', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('slug');
+            $table->string('slug')->unique();
             $table->timestamps();
             //enable soft delete
             $table->softDeletes();
@@ -25,7 +25,7 @@ return new class extends Migration
             $table->increments('id');
             $table->integer('category_id')->unsigned();
             $table->string('locale');
-            $table->string('title');
+            $table->string('title')->unique();
             
             $table->unique(['category_id','locale']);
             //connect category with category translations 

@@ -14,7 +14,7 @@ return new class extends Migration
         //create languages table
         Schema::create('languages', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('locale');
+            $table->string('locale')->unique();
             $table->string('name');
             $table->timestamps();
             //enable soft deletes
