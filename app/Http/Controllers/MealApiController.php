@@ -16,8 +16,6 @@ class MealApiController extends Controller
     public function index(Request $request)
     {
         try {
-            //get supported languages from the database.sqlite 
-            $locales = Language::pluck('locale')->toArray();
             //check for lang parameter
             if (!$request->has('lang')) {
                 throw new \Exception('missing lang parameter');
