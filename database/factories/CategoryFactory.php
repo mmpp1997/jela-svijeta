@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class CategoryFactory extends Factory
 {
+    protected $count = 0;
     /**
      * Define the model's default state.
      *
@@ -18,19 +19,19 @@ class CategoryFactory extends Factory
      */
     public function definition(): array
     {
+        $this->count++;
         //get locales from languages table
         $locales = Language::pluck('locale');
         //define category array with category slug
-        $category=['slug' => $this->faker->words(1 ,true) . '-' . $this->faker->randomDigit()];
+        $category = ['slug' => $this->faker->words(1, true) . '-kat-' . $this->count];
 
-        $word=$this->faker->words(2 ,true);
-        //set category name for each locale
+        //set category title for each locale
         foreach ($locales as $locale) {
-            
+
             $category[$locale] = [
-                'title' => $word . ' ' . strtoupper($locale)
+                'title' => $this->faker->words(2, true) . ' kategorija-' . $this->count . '-' . strtoupper($locale)
             ];
-         }
+        }
         //return category with slug and title for each locale
         return $category;
     }

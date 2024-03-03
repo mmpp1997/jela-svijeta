@@ -31,7 +31,7 @@ class MealApiController extends Controller
             //check if language is supported
             if (!in_array($lang, $locales)) {
                 //if not send error
-                throw new \Exception('unsupported language');
+                throw new \Exception('unsupported language check config/translatable.php');
             } else {
                 //set language based on "lang" query parameter e.g. "lang=en"
                 app()->setLocale($lang);

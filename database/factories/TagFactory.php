@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Language;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -9,6 +10,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class TagFactory extends Factory
 {
+    protected $count = 0;
     /**
      * Define the model's default state.
      *
@@ -16,11 +18,20 @@ class TagFactory extends Factory
      */
     public function definition(): array
     {
-        //fill tag data 
-        return [
-            'slug' => $this->faker->words(1 ,true) . '-' . $this->faker->randomDigit(),
-            'en' => ['title' =>'Tag ' .  $this->faker->words(1 ,true) . ' EN'],
-            'hr' => ['title' =>'Tag ' .  $this->faker->words(1 ,true) . ' HR'],
-        ];
+        $this->count++;
+        //get locales from languages table
+        $locales = Language::pluck('locale');
+        //define tag array with tag slug
+        $tag = ['slug' => $this->faker->words(1, true) . '-tag-' . $this->count];
+
+        //set tag title for each locale
+        foreach ($locales as $locale) {
+
+            $tag[$locale] = [
+                'title' => $this->faker->words(2, true) . ' tag-' . $this->count . '-' . strtoupper($locale)
+            ];
+        }
+        //return tag with slug and title for each locale
+        return $tag;
     }
 }
