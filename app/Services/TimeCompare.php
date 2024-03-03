@@ -10,11 +10,11 @@ class TimeCompare
     {
         $status = "created";
 
-        if ($updated_at && Carbon::parse($updated_at)->timestamp < $inputTime) {
+        if ($updated_at && Carbon::parse($updated_at)->timestamp > $inputTime) {
             $status = "updated";
         }
 
-        if ($deleted_at && Carbon::parse($deleted_at)->timestamp < $inputTime) {
+        if ($deleted_at && Carbon::parse($deleted_at)->timestamp > $inputTime) {
             $status = "deleted";
         }
 

@@ -18,8 +18,6 @@ class MealApiController extends Controller
         try {
             //get supported languages from the database.sqlite 
             $locales = Language::pluck('locale')->toArray();
-            //set avaliable locales in translatable.php to database values 
-            config(['translatable.locales' => $locales]);
             //check for lang parameter
             if (!$request->has('lang')) {
                 throw new \Exception('missing lang parameter');
