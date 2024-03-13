@@ -95,7 +95,7 @@ class MealApiController extends Controller
             return new MealCollection($meals->paginate($perPage));
         } catch (\Exception $e) {
             //in case of an error show it instead of sending data
-            return response()->json(['error' => $e->getMessage()], 400);
+            return response($e->getMessage());
         };
     }
 }
