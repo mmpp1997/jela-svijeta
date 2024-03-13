@@ -2,6 +2,10 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\CheckTags;
+use App\Rules\CheckWith;
+use App\Rules\CheckCategory;
+use App\Rules\CheckLanguage;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
@@ -24,14 +28,13 @@ class MealRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'lang' => 'required|string|size:2',
-            'per_page' => 'sometimes|numeric|min:1',
-            'category' => 'sometimes|numeric',
-            'tags' => 'sometimes|array',
-            'tags.*' => 'numeric',
-            'with' => 'sometimes|string',
-            'page' => 'sometimes|numeric|min:1',
-            'diff_time' => 'sometimes|numeric',
+            'per_page' => 'sometimes|numeric|gt:0',
+            'page' => 'sometimes|numeric|gt:0',
+            'category' => ['sometimes','string','min:0',new CheckCategory],
+            'tags' => ['sometimes','string',new CheckTags],
+            'with' => ['sometimes','string',new CheckWith],
+            'lang' => ['required','string','min:2',new CheckLanguage],
+            'diff_time' => 'sometimes|numeric|gt:0',
         ];
     }
 

@@ -18,55 +18,37 @@ class MealApiController extends Controller
     public function index(MealRequest $request)
     {
         try {
-            //check for lang parameter
-            if (!$request->has('lang')) {
-                throw new \Exception('missing lang parameter');
-            }
-            //get supported languages
-            $locales = Config::get('translatable.locales');
             //get language from query
             $lang = $request->validated()['lang'];
-            //check if language is supported
-            if (!in_array($lang, $locales)) {
-                //if not send error
-                throw new \Exception('unsupported language check config/translatable.php');
-            } else {
-                //set language based on "lang" query parameter e.g. "lang=en"
-                app()->setLocale($lang);
-            }
+            //set language based on "lang" query parameter e.g. "lang=en"
+            app()->setLocale($lang);
             //get meals
             $meals = Meal::query();
             //check if request has diff_time
             if ($request->has('diff_time')) {
-
-                //check if diff time was inputted correctly
-                if ($request->input('diff_time') <= 0) {
-                    throw new \Exception('invalid input for diff_time');
-                }
-                //query with soft deleted if there is  a diff_time paramter
+                //query with soft deleted if there is a diff_time paramter
                 $meals->withTrashed();
             }
-            
             //filter by category if query has "category" e.g. "category=1"
             if ($request->has('category')) {
 
-                $category = $request->input('category');
+                $category = $request->validated()['category'];
 
-                //per task request category can be null, !null and categoryId
+                //category can be null, !null and categoryId
                 if (Str::lower($category) === 'null') {
                     $meals->whereNull('category');
-                }
-                else if(Str::lower($category) === '!null'){
+                } 
+                else if (Str::lower($category) === '!null') {
                     $meals->whereNotNull('category');
-                }
-                 else {
+                } 
+                else {
                     $meals->where('category', $category);
                 }
             }
             //filter by tags e.g. "tags=1,2"
             if ($request->has('tags')) {
 
-                $tags = explode(',', $request->input('tags'));
+                $tags = explode(',', $request->validated()['tags']);
 
                 //filter only those meals that have exacly those tags defined in the querry
                 $meals->whereHas('tags', function ($q) use ($tags) {
@@ -77,21 +59,11 @@ class MealApiController extends Controller
             // e.g. with=ingredients,tags,category
             if ($request->has('with')) {
 
-                $properties = explode(',', $request->input('with'));
+                $properties = explode(',', $request->validated()['with']);
                 $meals->with($properties);
             }
             //paginate results based on user input e.g. ?per_page=10
-            $perPage = $request->input('per_page', 10);
-            //check if per_page is valid
-            if (!is_numeric($perPage) || $perPage <= 0) {
-                throw new \Exception('invalid input for per_page query parametner');
-            }
-            //select page based on user input e.g. ?page=1
-            $page = $request->input('page', 1);
-            //check if per_page is valid
-            if (!is_numeric($page) || $page <= 0) {
-                throw new \Exception('invalid input for page query parametner');
-            }
+            $perPage = $request->validated()['per_page'] ?? 10;       
             //return meal colection with all requested data
             return new MealCollection($meals->paginate($perPage));
         } catch (\Exception $e) {
