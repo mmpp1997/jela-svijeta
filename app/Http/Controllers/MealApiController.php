@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Meal;
 use App\Models\Language;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\MealCollection;
@@ -32,24 +33,32 @@ class MealApiController extends Controller
                 //set language based on "lang" query parameter e.g. "lang=en"
                 app()->setLocale($lang);
             }
-            //check if diff time was inputted correctly
+            //get meals
+            $meals = Meal::query();
+            //check if request has diff_time
             if ($request->has('diff_time')) {
 
+                //check if diff time was inputted correctly
                 if ($request->input('diff_time') <= 0) {
                     throw new \Exception('invalid input for diff_time');
                 }
+                //query with soft deleted if there is  a diff_time paramter
+                $meals->withTrashed();
             }
-            //get meals with soft deleted
-            $meals = Meal::query()->withTrashed();
+            
             //filter by category if query has "category" e.g. "category=1"
             if ($request->has('category')) {
 
                 $category = $request->input('category');
 
-                //per task request category can be null or !null
-                if ($category === 'null') {
+                //per task request category can be null, !null and categoryId
+                if (Str::lower($category) === 'null') {
                     $meals->whereNull('category');
-                } else {
+                }
+                else if(Str::lower($category) === '!null'){
+                    $meals->whereNotNull('category');
+                }
+                 else {
                     $meals->where('category', $category);
                 }
             }
@@ -86,7 +95,7 @@ class MealApiController extends Controller
             return new MealCollection($meals->paginate($perPage));
         } catch (\Exception $e) {
             //in case of an error show it instead of sending data
-            return response()->json(['error' => $e->getMessage()], 400)->getContent();
+            return response()->json(['error' => $e->getMessage()], 400);
         };
     }
 }

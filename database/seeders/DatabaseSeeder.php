@@ -46,6 +46,10 @@ class DatabaseSeeder extends Seeder
                 'title' => 'jelo 1 na HRV ',
                 'description' => 'ovo je jelo 1 na HRV'
             ],
+            'fr' => [
+                'title' => 'jelo 1 na FR ',
+                'description' => 'ovo je jelo 1 na FR'
+            ],
             'created_at' => '2024-02-29 09:37:03',
             'updated_at' => '2024-02-29 11:37:03',
             'deleted_at' => '2024-02-29 13:37:03'
