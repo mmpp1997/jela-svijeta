@@ -18,7 +18,7 @@ class CheckWith implements ValidationRule
         $properties = explode(',', $value);
         foreach ($properties as $property) {
             if (!method_exists(Meal::class, $property)) {
-                $fail('undefined Meal property ' . $property);
+                $fail('undefined Meal relationship ' . $property);
             }
         }
     }

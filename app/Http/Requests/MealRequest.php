@@ -30,7 +30,7 @@ class MealRequest extends FormRequest
         return [
             'per_page' => 'sometimes|numeric|gt:0',
             'page' => 'sometimes|numeric|gt:0',
-            'category' => ['sometimes','string','min:0',new CheckCategory],
+            'category' => ['sometimes','string',new CheckCategory],
             'tags' => ['sometimes','string',new CheckTags],
             'with' => ['sometimes','string',new CheckWith],
             'lang' => ['required','string','min:2',new CheckLanguage],
