@@ -3,13 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Meal;
-use App\Models\Language;
 use Illuminate\Support\Str;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MealRequest;
 use App\Http\Resources\MealCollection;
-use Illuminate\Support\Facades\Config;
 
 class MealApiController extends Controller
 {
@@ -68,7 +65,8 @@ class MealApiController extends Controller
             return new MealCollection($meals->paginate($perPage));
         } catch (\Exception $e) {
             //in case of an error show it instead of sending data
-            return response($e->getMessage());
+            return response()->json(['error' => $e->getMessage()], 400);
+            //return response($e->getMessage());
         };
     }
 }
