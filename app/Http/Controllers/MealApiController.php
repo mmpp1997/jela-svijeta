@@ -7,6 +7,7 @@ use App\Models\Language;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\MealRequest;
 use App\Http\Resources\MealCollection;
 use Illuminate\Support\Facades\Config;
 
@@ -14,7 +15,7 @@ class MealApiController extends Controller
 {
 
     //index function used by api get meals route
-    public function index(Request $request)
+    public function index(MealRequest $request)
     {
         try {
             //check for lang parameter
@@ -24,7 +25,7 @@ class MealApiController extends Controller
             //get supported languages
             $locales = Config::get('translatable.locales');
             //get language from query
-            $lang = $request->input('lang');
+            $lang = $request->validated()['lang'];
             //check if language is supported
             if (!in_array($lang, $locales)) {
                 //if not send error
